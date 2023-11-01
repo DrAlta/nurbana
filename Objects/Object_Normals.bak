@@ -1,0 +1,345 @@
+#include "Object_Normals.h"
+
+
+//Draws Quad Faces and Calculates Normals given Linear Quad Data (Lesser Quality, Less CPU)
+void Object_Normals::CalculateQuadNormals(float pts[][3], float Normals[][3], int LengthU, int LengthV, bool SMOOTH, bool EPU, bool EPV) {
+  float		Triangle[3][3], NormalTmp[6][3], Length;
+  int		i, n, k, NormTot;
+
+  //Now Draw Faces and get normals
+  if (SMOOTH) {
+    for (i= 0; i < LengthU; i++) {
+      for (n= 0; n < LengthV; n++) {
+
+      NormTot= 0;
+      //UPPER-RIGHT
+      if ((i < LengthU-1) && (n < LengthV-1)) {
+        Triangle[0][0]= pts[i * LengthV + n][0];
+        Triangle[0][1]= pts[i * LengthV + n][1];
+        Triangle[0][2]= pts[i * LengthV + n][2];
+
+        Triangle[1][0]= pts[i * LengthV + n + LengthV][0];
+        Triangle[1][1]= pts[i * LengthV + n + LengthV][1];
+        Triangle[1][2]= pts[i * LengthV + n + LengthV][2];
+
+        Triangle[2][0]= pts[i * LengthV + n + 1][0];
+        Triangle[2][1]= pts[i * LengthV + n + 1][1];
+        Triangle[2][2]= pts[i * LengthV + n + 1][2];
+
+        NurbanaMath::Normal(Triangle,NormalTmp[NormTot]);
+        Length= NurbanaMath::Normalize(NormalTmp[NormTot][0],NormalTmp[NormTot][1],NormalTmp[NormTot][2]);
+        if (Length) {
+          NormalTmp[NormTot][0]/= Length; NormalTmp[NormTot][1]/= Length; NormalTmp[NormTot][2]/= Length;
+          NormTot++;
+        } //fi
+      } //fi
+
+      
+      //UPPER-LEFT
+      if ((i > 0) && (n < LengthV-1)) {
+        Triangle[0][0]= pts[i * LengthV + n][0];
+        Triangle[0][1]= pts[i * LengthV + n][1];
+        Triangle[0][2]= pts[i * LengthV + n][2];
+
+        Triangle[1][0]= pts[i * LengthV + n + 1][0];
+        Triangle[1][1]= pts[i * LengthV + n + 1][1];
+        Triangle[1][2]= pts[i * LengthV + n + 1][2];
+
+        Triangle[2][0]= pts[i * LengthV + n - LengthV][0];
+        Triangle[2][1]= pts[i * LengthV + n - LengthV][1];
+        Triangle[2][2]= pts[i * LengthV + n - LengthV][2];
+
+        NurbanaMath::Normal(Triangle,NormalTmp[NormTot]);
+        Length= NurbanaMath::Normalize(NormalTmp[NormTot][0],NormalTmp[NormTot][1],NormalTmp[NormTot][2]);
+        if (Length) {
+          NormalTmp[NormTot][0]/= Length; NormalTmp[NormTot][1]/= Length; NormalTmp[NormTot][2]/= Length;
+          NormTot++;
+        } //fi
+      } //fi
+
+
+      //BOTTOM-LEFT
+      if ((i > 0) && (n > 0)) {
+        Triangle[0][0]= pts[i * LengthV + n][0];
+        Triangle[0][1]= pts[i * LengthV + n][1];
+        Triangle[0][2]= pts[i * LengthV + n][2];        
+
+        Triangle[1][0]= pts[i * LengthV + n - LengthV][0];
+        Triangle[1][1]= pts[i * LengthV + n - LengthV][1];
+        Triangle[1][2]= pts[i * LengthV + n - LengthV][2];
+
+        Triangle[2][0]= pts[i * LengthV + n - 1][0];
+        Triangle[2][1]= pts[i * LengthV + n - 1][1];
+        Triangle[2][2]= pts[i * LengthV + n - 1][2];
+
+        NurbanaMath::Normal(Triangle,NormalTmp[NormTot]);
+        Length= NurbanaMath::Normalize(NormalTmp[NormTot][0],NormalTmp[NormTot][1],NormalTmp[NormTot][2]);
+        if (Length) {
+          NormalTmp[NormTot][0]/= Length; NormalTmp[NormTot][1]/= Length; NormalTmp[NormTot][2]/= Length;
+          NormTot++;
+        } //fi
+      } //fi
+
+
+      //BOTTOM-RIGHT
+      if ((i < LengthU-1) && (n > 0)) {
+        Triangle[0][0]= pts[i * LengthV + n][0];
+        Triangle[0][1]= pts[i * LengthV + n][1];
+        Triangle[0][2]= pts[i * LengthV + n][2];        
+
+        Triangle[1][0]= pts[i * LengthV + n - 1][0];
+        Triangle[1][1]= pts[i * LengthV + n - 1][1];
+        Triangle[1][2]= pts[i * LengthV + n - 1][2];
+
+        Triangle[2][0]= pts[i * LengthV + n + LengthV][0];
+        Triangle[2][1]= pts[i * LengthV + n + LengthV][1];
+        Triangle[2][2]= pts[i * LengthV + n + LengthV][2];
+
+        NurbanaMath::Normal(Triangle,NormalTmp[NormTot]);
+        Length= NurbanaMath::Normalize(NormalTmp[NormTot][0],NormalTmp[NormTot][1],NormalTmp[NormTot][2]);
+        if (Length) {
+          NormalTmp[NormTot][0]/= Length; NormalTmp[NormTot][1]/= Length; NormalTmp[NormTot][2]/= Length;
+          NormTot++;
+        } //fi
+      } //fi
+
+
+      // Sum the Normals
+      for (k= 1; k < NormTot; k++) {
+        NormalTmp[0][0]+= NormalTmp[k][0];
+        NormalTmp[0][1]+= NormalTmp[k][1];
+        NormalTmp[0][2]+= NormalTmp[k][2];
+      } //eof
+
+      //Average the Normals
+      NormalTmp[0][0]/= NormTot;
+      NormalTmp[0][1]/= NormTot;
+      NormalTmp[0][2]/= NormTot;
+
+      //Store the Averaged Normal
+      Normals[i * LengthV + n][0]= NormalTmp[0][0];
+      Normals[i * LengthV + n][1]= NormalTmp[0][1];
+      Normals[i * LengthV + n][2]= NormalTmp[0][2];
+
+      } //eof
+    } //eof
+
+  } else {
+    for (i= 0; i < LengthU-1; i++) {
+      for (n= 0; n < LengthV-1; n++) {
+          Triangle[0][0]= pts[i * LengthV + n][0];
+          Triangle[0][1]= pts[i * LengthV + n][1];
+          Triangle[0][2]= pts[i * LengthV + n][2];
+
+          Triangle[1][0]= pts[i * LengthV + n + LengthV][0];
+          Triangle[1][1]= pts[i * LengthV + n + LengthV][1];
+          Triangle[1][2]= pts[i * LengthV + n + LengthV][2];
+
+          Triangle[2][0]= pts[i * LengthV + n + 1][0];
+          Triangle[2][1]= pts[i * LengthV + n + 1][1];
+          Triangle[2][2]= pts[i * LengthV + n + 1][2];
+
+
+          NurbanaMath::Normal(Triangle,NormalTmp[0]);
+          Length= NurbanaMath::Normalize(NormalTmp[0][0],NormalTmp[0][1],NormalTmp[0][2]);
+
+          Normals[i * LengthV + n][0]= NormalTmp[0][0]/Length;
+          Normals[i * LengthV + n][1]= NormalTmp[0][1]/Length;
+          Normals[i * LengthV + n][2]= NormalTmp[0][2]/Length;
+      } //eof
+    } //eof
+
+  } //fi
+} //eof Object_Normals::CalculateQuadNormals()
+
+
+
+//Draws Triad Faces and Calculates Normals given Linear Quad Data (Higher Quality, More CPU)
+void Object_Normals::CalculateTriNormals(float pts[][3], float Normals[][3], int LengthU, int LengthV, bool SMOOTH, bool EPU, bool EPV) {
+  //  There are 6 faces to Average for decent smoothing
+  //   _______
+  //  |  /|2 /|
+  //  | /3| /1|
+  //  |/__./__|
+  //  | 4/|  /|
+  //  | /5|6/ |
+  //  |/__|/__|
+
+  float		Triangle[3][3], NormalTmp[6][3], Length;
+  int		i, n, k, NormTot, FACE, Loc[3];
+
+  if (SMOOTH) {
+  
+  for (i= 0; i < LengthU; i++) {
+    for (n= 0; n < LengthV; n++) {
+      //Calculate Sm00th Normals for each vertex and store in Normal[][3] Array
+      //We need to Check if LEFT, LEFT-BOTTOM, and BOTTOM Quads Exist!!!
+      //There can be 2, 3, or 6 Normals that go into creating the averaged
+      //UPPER-RIGHT= 2, UPPER-LEFT= 1, BOTTOM-LEFT= 2, BOTTOM-RIGHT= 1;
+      //smooth Normal.
+
+
+      NormTot= 0;
+      for (k= 1; k <= 6; k++) {
+        FACE= 1;
+        switch( k ) {
+          case 1:
+            if ((i < LengthU-1) && (n < LengthV-1)) {
+              Loc[0]= i * LengthV + n;
+              Loc[1]= i * LengthV + n + LengthV;
+              Loc[2]= i * LengthV + n + LengthV + 1;
+            } else {
+              FACE= 0;
+            }//fi
+            break;
+
+          case 2:
+            if ((i < LengthU-1) && (n < LengthV-1)) {
+              Loc[0]= i * LengthV + n;
+              Loc[1]= i * LengthV + n + LengthV + 1;
+              Loc[2]= i * LengthV + n + 1;
+            } else {
+              FACE= 0;
+            } //fi
+            break;
+
+          case 3:
+            if ((i > 0) && (n < LengthV-1)) {
+              Loc[0]= i * LengthV + n;
+              Loc[1]= i * LengthV + n + 1;
+              Loc[2]= i * LengthV + n - LengthV;
+            } else {
+              FACE= 0;
+            } //fi
+            break;
+
+          case 4:
+            if ((i > 0) && (n > 0)) {
+              Loc[0]= i * LengthV + n;
+              Loc[1]= i * LengthV + n - LengthV;
+              Loc[2]= i * LengthV + n - LengthV - 1;
+            } else {
+              FACE= 0;
+            } //fi
+            break;
+
+          case 5:
+            if ((i > 0) && (n > 0)) {
+              Loc[0]= i * LengthV + n;
+              Loc[1]= i * LengthV + n - LengthV - 1;
+              Loc[2]= i * LengthV + n - 1;
+            } else {
+              FACE= 0;
+            } //fi
+            break;
+
+          case 6:
+            if ((i < LengthU-1) && (n > 0)) {
+              Loc[0]= i * LengthV + n;
+              Loc[1]= i * LengthV + n - 1;
+              Loc[2]= i * LengthV + n + LengthV;
+            } else {
+              FACE= 0;
+            } //fi
+            break;
+
+          default:
+            break;
+        } //eos
+
+        if (FACE) {
+          Triangle[0][0]= pts[Loc[0]][0];
+          Triangle[0][1]= pts[Loc[0]][1];
+          Triangle[0][2]= pts[Loc[0]][2];
+
+          Triangle[1][0]= pts[Loc[1]][0];
+          Triangle[1][1]= pts[Loc[1]][1];
+          Triangle[1][2]= pts[Loc[1]][2];
+
+          Triangle[2][0]= pts[Loc[2]][0];
+          Triangle[2][1]= pts[Loc[2]][1];
+          Triangle[2][2]= pts[Loc[2]][2];
+
+          NurbanaMath::Normal(Triangle,NormalTmp[NormTot]);
+          Length= NurbanaMath::Normalize(NormalTmp[NormTot][0],NormalTmp[NormTot][1],NormalTmp[NormTot][2]);
+          if (Length) {
+            NormalTmp[NormTot][0]/= Length; NormalTmp[NormTot][1]/= Length; NormalTmp[NormTot][2]/= Length;
+            NormTot++;
+          } //fi
+        } //fi
+      } //eof
+
+      // Sum the Normals
+      for (k= 0; k < NormTot - 1; k++) { //double check from 1 to 0
+        NormalTmp[0][0]+= NormalTmp[k][0];
+        NormalTmp[0][1]+= NormalTmp[k][1];
+        NormalTmp[0][2]+= NormalTmp[k][2];
+      } //eof
+
+      //Average the Normals
+      NormalTmp[0][0]/= NormTot;
+      NormalTmp[0][1]/= NormTot;
+      NormalTmp[0][2]/= NormTot;
+
+      //Store the Averaged Normal
+      Normals[i * LengthV + n][0]= NormalTmp[0][0];
+      Normals[i * LengthV + n][1]= NormalTmp[0][1];
+      Normals[i * LengthV + n][2]= NormalTmp[0][2];
+
+    } //eof
+  } //eof
+
+  } else {
+    k= 0;
+    for (i= 0; i < LengthU-1; i++) {
+      for (n= 0; n < LengthV-1; n++) {
+          Triangle[0][0]= pts[i * LengthV + n][0];
+          Triangle[0][1]= pts[i * LengthV + n][1];
+          Triangle[0][2]= pts[i * LengthV + n][2];
+
+          Triangle[1][0]= pts[i * LengthV + n + LengthV][0];
+          Triangle[1][1]= pts[i * LengthV + n + LengthV][1];
+          Triangle[1][2]= pts[i * LengthV + n + LengthV][2];
+
+          Triangle[2][0]= pts[i * LengthV + n + LengthV + 1][0];
+          Triangle[2][1]= pts[i * LengthV + n + LengthV + 1][1];
+          Triangle[2][2]= pts[i * LengthV + n + LengthV + 1][2];
+
+          NurbanaMath::Normal(Triangle,NormalTmp[0]);
+          Length= NurbanaMath::Normalize(NormalTmp[0][0],NormalTmp[0][1],NormalTmp[0][2]);
+          NormalTmp[0][0]/= Length; NormalTmp[0][1]/= Length; NormalTmp[0][2]/= Length;
+
+          //Side 1
+          Normals[k][0]= NormalTmp[0][0];
+          Normals[k][1]= NormalTmp[0][1];
+          Normals[k][2]= NormalTmp[0][2];
+          k++;
+
+
+          Triangle[0][0]= pts[i * LengthV + n][0];
+          Triangle[0][1]= pts[i * LengthV + n][1];
+          Triangle[0][2]= pts[i * LengthV + n][2];
+
+          Triangle[1][0]= pts[i * LengthV + n + LengthV + 1][0];
+          Triangle[1][1]= pts[i * LengthV + n + LengthV + 1][1];
+          Triangle[1][2]= pts[i * LengthV + n + LengthV + 1][2];
+
+          Triangle[2][0]= pts[i * LengthV + n + 1][0];
+          Triangle[2][1]= pts[i * LengthV + n + 1][1];
+          Triangle[2][2]= pts[i * LengthV + n + 1][2];
+
+
+          NurbanaMath::Normal(Triangle,NormalTmp[0]);
+          Length= NurbanaMath::Normalize(NormalTmp[0][0],NormalTmp[0][1],NormalTmp[0][2]);
+          NormalTmp[0][0]/= Length; NormalTmp[0][1]/= Length; NormalTmp[0][2]/= Length;
+
+          //Side 2
+          Normals[k][0]= NormalTmp[0][0];
+          Normals[k][1]= NormalTmp[0][1];
+          Normals[k][2]= NormalTmp[0][2];
+          k++;
+
+     } //fi
+   } //fi
+  } //fi
+} //eof Object_Normals::CalculateTriNormals()

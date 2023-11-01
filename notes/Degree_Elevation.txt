@@ -1,0 +1,15 @@
+ 1. Use Eq 5.36 to create coeficients for bezier degree elevation
+1b. Initialize first bezier segment
+ 2. Loop Through Knot Vector
+   3. Capture Bezier Segment
+   4. Elevate Segment
+   5. Remove Knot Loop
+     6. Compute new Control Points
+   7. Prep next bezier segment
+
+Good:
+1,1b,2,3,4,7
+
+
+Figrue out Steps:
+5 and 6

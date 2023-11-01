@@ -1,0 +1,6 @@
+Knot Removal:
+=============
+- If knots distributed evenly, Remove knot from center
+- If knots distributed unevenly, remove knot with highest
+  multiplicity until all knots are evenly distributed, i.e
+  same multiplicity.

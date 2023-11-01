@@ -1,0 +1,3 @@
+Use Curve Fitting to create end of surface A
+ - Higher CP# surface
+For other side use 

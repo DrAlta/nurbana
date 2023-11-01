@@ -1,0 +1,55 @@
+--- glut_util.c ---
+from:
+ while ((error = glGetError()) != GL_NO_ERROR)
+    __glutWarning("GL error: %s", gluErrorString(error));
+
+to:
+// while ((error = glGetError()) != GL_NO_ERROR)
+//    __glutWarning("GL error: %s", gluErrorString(error));
+
+
+--- glutint.h ---
+//To add whether the key is going UP or DOWN
+from: typedef void (*GLUTspecialCB) (int, int, int);
+to: typedef void (*GLUTspecialCB) (int, int, int, int);
+
+from: typedef void (*GLUTspecialFCB) (int *, int *, int *);
+to: typedef void (*GLUTspecialFCB) (int *, int *, int *, int *);
+
+
+--- glut_event.c ---
+case KeyRelease:
+  window = __glutGetWindow(event.xkey.window);
+  if (!window) break;
+
+  last_press_time= ((XKeyEvent *) &event)->time;
+                                        
+  /********* JUSTIN ************/
+  if (window->special) {
+    KeySym ks;
+    ks = XLookupKeysym((XKeyEvent *) & event, 0);
+    /* really dirty: germans!!! */
+    if(ks==XK_Meta_L || ks==XK_Meta_R) ks= XK_Alt_L;
+    window->special(ks, event.xkey.x, event.xkey.y, 0);
+  } //fi
+  break;
+
+case KeyPress:
+  window = __glutGetWindow(event.xkey.window);
+  if (!window) break;
+
+  last_press_time= ((XKeyEvent *) &event)->time;
+                                        
+  /********* JUSTIN ************/
+  if (window->special) {
+    KeySym ks;
+    ks = XLookupKeysym((XKeyEvent *) & event, 0);
+    /* really dirty: germans!!! */
+    if(ks==XK_Meta_L || ks==XK_Meta_R) ks= XK_Alt_L;
+    window->special(ks, event.xkey.x, event.xkey.y, 1);
+  } //fi
+
+
+--- glut.h ---
+from: extern void glutSpecialFunc(void (*)(int key, int x, int y));
+to: extern void glutSpecialFunc(void (*)(int key, int x, int y, int UD));

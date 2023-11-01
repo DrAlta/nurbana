@@ -1,0 +1,122 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Nurbana - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP158B.tmp" with contents
+[
+/nologo /MT /W3 /GX /Zd /O2 /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/Nurbana.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /c 
+"C:\Nurbana1.04a\Objects\NURBS\NURBS_Generate.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP158B.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP158C.tmp" with contents
+[
+kernel32.lib msvcrt.lib user32.lib advapi32.lib opennurbs_static_vc60d.lib zlib_vc60d.lib opengl32.lib SDLmain.lib SDL.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/Nurbana.pdb" /machine:I386 /nodefaultlib:"LIBCMT" /nodefaultlib:"LIBCD" /out:"Debug/Nurbana.exe" /pdbtype:sept 
+.\Debug\NTK_Base.obj
+.\Debug\NTK_Button.obj
+.\Debug\NTK_Container.obj
+.\Debug\NTK_Group.obj
+.\Debug\NTK_Label.obj
+.\Debug\NTK_List.obj
+.\Debug\NTK_Menu.obj
+.\Debug\NTK_ScrollBar.obj
+.\Debug\NTK_Slider_Button.obj
+.\Debug\NTK_Slider_Horz.obj
+.\Debug\NTK_Slider_Vert.obj
+.\Debug\NTK_Text.obj
+.\Debug\NTK_TextArea.obj
+.\Debug\NTK_TextInput.obj
+.\Debug\NTK_Valuator.obj
+.\Debug\NTK_Window.obj
+.\Debug\ntku_Bresenham.obj
+.\Debug\ntku_Button.obj
+.\Debug\ntku_Glyphic.obj
+.\Debug\ntku_Math.obj
+.\Debug\ntku_XPM.obj
+.\Debug\NURBS.obj
+.\Debug\NURBS_Construct.obj
+.\Debug\NURBS_Degree.obj
+.\Debug\NURBS_Fitting.obj
+.\Debug\NURBS_Generate.obj
+.\Debug\NURBS_Knot.obj
+.\Debug\Bezier.obj
+.\Debug\DrawFaces.obj
+.\Debug\NURBS_TrimCurve.obj
+.\Debug\Object_Base.obj
+.\Debug\Object_Draw.obj
+.\Debug\Object_List.obj
+.\Debug\Object_Manager.obj
+.\Debug\Object_Normals.obj
+.\Debug\Object_NURBS.obj
+.\Debug\Object_Primitives.obj
+.\Debug\Object_WC.obj
+.\Debug\NWM.obj
+.\Debug\NWM_Base.obj
+.\Debug\NWM_FileManager.obj
+.\Debug\NWM_Handle.obj
+.\Debug\NWM_KnotMenu.obj
+.\Debug\NWM_List.obj
+.\Debug\NWM_Menu.obj
+.\Debug\NWM_ModelView.obj
+.\Debug\NWM_Panel_Construction.obj
+.\Debug\NWM_Panel_Edit.obj
+.\Debug\NWM_Panel_Materials.obj
+.\Debug\NWM_Panel_Primitives.obj
+.\Debug\NWM_Panel_Render.obj
+.\Debug\NWM_Panel_Settings.obj
+.\Debug\NWM_SceneNotes.obj
+.\Debug\NWM_Selector.obj
+.\Debug\NWM_StatusBar.obj
+.\Debug\nwmu_Handle.obj
+.\Debug\NRT_Light_Base.obj
+.\Debug\NRT_Light_List.obj
+.\Debug\NRT_Light_Manager.obj
+.\Debug\NRT_Light_Sphere.obj
+.\Debug\NRT_Object_Base.obj
+.\Debug\NRT_Object_List.obj
+.\Debug\NRT_Object_Manager.obj
+.\Debug\NRT_Object_NURBS.obj
+.\Debug\NRT_Object_Sphere.obj
+.\Debug\NRT_Object_Triangle.obj
+.\Debug\NRT_RayTracer.obj
+.\Debug\NRT_Render.obj
+.\Debug\DXF_IO.obj
+.\Debug\FileIO.obj
+.\Debug\NURBS_IO.obj
+.\Debug\ON_IO.obj
+.\Debug\WinFileSystem.obj
+.\Debug\Cursors.obj
+.\Debug\BorderSelect.obj
+.\Debug\Endian.obj
+.\Debug\InvertBuffer.obj
+.\Debug\KeyTable.obj
+.\Debug\MaterialList.obj
+.\Debug\ModelView.obj
+.\Debug\NGUtils.obj
+.\Debug\NIdle.obj
+.\Debug\NTimer.obj
+.\Debug\Nurbana.obj
+.\Debug\NurbanaMath.obj
+.\Debug\ProjectUtility.obj
+.\Debug\Trackball.obj
+.\Debug\VertexOps.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP158C.tmp"
+<h3>Output Window</h3>
+Compiling...
+NURBS_Generate.cpp
+C:\Nurbana1.04a\Objects\NURBS\NURBS_Generate.cpp(603) : warning C4101: 'sum' : unreferenced local variable
+C:\Nurbana1.04a\Objects\NURBS\NURBS_Generate.cpp(603) : warning C4101: 'd' : unreferenced local variable
+C:\Nurbana1.04a\Objects\NURBS\NURBS_Generate.cpp(603) : warning C4101: 'e' : unreferenced local variable
+Linking...
+
+
+
+<h3>Results</h3>
+Nurbana.exe - 0 error(s), 3 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,104 @@
+###############################################################
+
+# If your make doesn't use .cpp for C++ extensions, 
+# then uncomment the suffixes line.
+.SUFFIXES : .c .cpp
+
+RM = /bin/rm
+
+AR = ar qvl
+
+# If your system doesn't use ranlib, uncomment the "echo" define.
+RANLIB = /usr/local/bin/ranlib
+# RANLIB = echo
+
+###############################################################
+# Gnu tools
+
+# C compiler and flags
+CC = gcc
+CFLAGS = -O3 -Wall -Wmissing-prototypes
+
+# C++ compiler and flags
+CCC = g++
+# older versions of g++ may require the "-fhandle-exceptions" option
+#CCFLAGS = -O -fhandle-exceptions -Wall -Wmissing-prototypes -I.
+CCFLAGS = -O3 -Wall -Wmissing-prototypes
+
+###############################################################
+# SGI IRIX tools
+
+# C compiler and flags
+#CC = gcc
+#CFLAGS = -O -Wall -Wmissing-prototypes
+
+# C++ compiler and flags
+#CCC = g++
+# older versions of g++ may require the "-fhandle-exceptions" option
+#CCFLAGS = -O -fhandle-exceptions -Wall -Wmissing-prototypes -I.
+#CCFLAGS = -O -Wall -Wmissing-prototypes -I.
+
+###############################################################
+
+.cpp.o :
+	$(CCC) $(CCFLAGS) -c $*.cpp -o $*.o
+
+.c.o :
+	$(CC) $(CFLAGS) -c $*.c -o $*.o
+
+###############################################################
+
+
+NURBANA_OBJ = Bezier.o \
+	./BorderSelect.o \
+	./DrawFaces.o \
+	./FileIO.o \
+        ./InvertBuffer.o \
+	./KeyTable.o \
+	./ModelView.o \
+	./Nurbana.o \
+	./NurbanaMath.o \
+	./Objects.o \
+	./ProjectUtility.o \
+	./Trackball.o \
+	./UnixFileSystem.o \
+        ./VertexOps.o \
+        ./WindowManager.o \
+	./NTK/ntku_Button.o \
+	./NTK/ntku_Glyphic.o \
+	./NTK/ntku_Text.o \
+	./NTK/ntku_XPM.o \
+	./NTK/NTK_Base.o \
+	./NTK/NTK_Button.o \
+	./NTK/NTK_Container.o \
+	./NTK/NTK_Group.o \
+	./NTK/NTK_Label.o \
+	./NTK/NTK_Slider.o \
+	./NTK/NTK_TextInput.o \
+	./NTK/NTK_Window.o \
+	./GLUT/glut_cmap.o \
+	./GLUT/glut_cursor.o \
+	./GLUT/glut_event.o \
+	./GLUT/glut_ext.o \
+	./GLUT/glut_fullscrn.o \
+	./GLUT/glut_get.o \
+	./GLUT/glut_init.o \
+	./GLUT/glut_menu.o \
+	./GLUT/glut_mesa.o \
+	./GLUT/glut_modifier.o \
+	./GLUT/glut_swap.o \
+	./GLUT/glut_util.o \
+	./GLUT/glut_warp.o \
+	./GLUT/glut_win.o \
+	./GLUT/layerutil.o
+
+NURBANA = nurbana
+
+all : $(NURBANA)
+
+$(NURBANA) : $(NURBANA_OBJ)
+	$(CCC) $(NURBANA_OBJ) -L/usr/local/lib -I/usr/local/include -lGL -lRhinoIO -lm -lX11 -lXmu -lXext -o $@
+
+clean :
+	-$(RM) $(NURBANA)
+	-$(RM) $(NURBANA_OBJ)

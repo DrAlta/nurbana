@@ -1,0 +1,25 @@
+[ Rebuild Menu ]
+there are 4 cases:
+- CP Inc
+o Subdivide
+o Knot Removal until CP Target is met
+
+- CP Dec
+o Knot Removal until CP Target is met
+
+- Deg Inc
+o Degree Elevation
+o Knot Removal until Original CP Target is met
+
+- Deg Dec
+o Degree DeElevation
+o Knot insert
+o Knot decrement until original CP Target is met
+
+Rebuild Menu:
+-------------
+
+    [ U ]  [ V ]
+CP  [004]  [004] +-
+DG  [003]  [003] +-
+    [x] Lossless

@@ -1,0 +1,47 @@
+--- glut_util.c ---
+from:
+ while ((error = glGetError()) != GL_NO_ERROR)
+    __glutWarning("GL error: %s", gluErrorString(error));
+
+to:
+// while ((error = glGetError()) != GL_NO_ERROR)
+//    __glutWarning("GL error: %s", gluErrorString(error));
+
+
+--- glutint.h ---
+//To add whether the key is going UP or DOWN
+from: typedef void (*GLUTspecialCB) (int, int, int);
+to: typedef void (*GLUTspecialCB) (int, int, int, int);
+
+from: typedef void (*GLUTspecialFCB) (int *, int *, int *);
+to: typedef void (*GLUTspecialFCB) (int *, int *, int *, int *);
+
+
+--- glut_event.c ---
+from:
+if (win->keybEvent) {
+  win->keybEvent = false;
+  __glutSetWindow(win);
+  if (win->keyboard) {
+    gState.modifierKeys = win->modifierKeys;
+    win->keyboard(win->key, win->keyX, win->keyY);
+    gState.modifierKeys = ~0;
+  }
+}
+
+to:
+if (win->keybEvent) {
+  win->keybEvent = false;
+  __glutSetWindow(win);
+  if (win->special) {
+//    gState.modifierKeys = win->modifierKeys;
+    win->keyboard(win->specialKey, win->specialX, win->specialY);
+//    gState.modifierKeys = ~0;
+  }
+}
+
+
+
+--- glut.h ---
+from: extern void glutSpecialFunc(void (*)(int key, int x, int y));
+to: extern void glutSpecialFunc(void (*)(int key, int x, int y, int UD));

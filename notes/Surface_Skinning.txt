@@ -1,0 +1,17 @@
+[ Surface Skinning ]
+- Given a series of curves:
+o All new curves are defined over the same knot vector
+o All new curves have a common degree p, or order
+
+
+
+
+[ Miscellaneous ]
+- Ruled surface is a special case of a skinned surface
+
+
+[ How to Handel Selcection 2 Curves ]
+- Linked list to store order in which objects were selected
+
+
+[ How to Create a Surface from the 2 curves and remove them ]

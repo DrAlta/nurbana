@@ -1,0 +1,30 @@
+Method 1:
+- Modelview handles following:
+  - Object Creation new main
+  - Object Duplication main -> main
+  - Backup of Objects all main -> new backup
+  - Reset (Duplication) backup -> main
+- New function to swap between Main and Backup list
+
+- What about doing a linked list of Object List's for multi-level undo
+  functionality?
+  - Will that be handled by Modelview as well?
+
+-----------------------------------------------------------
+Method 2:
+- Move all functions from Object_Manager to a higher level Class
+  - Class will include: Object_Manager
+  - Object_Manager will pass back pointer to desired ObjectNode
+
+- New class will contain all necessary functions
+**- Make sure we would have access to change objects from this new class...
+
+- From this new class manage:
+  - Object Creation
+  - Object Duplication
+  - Object Backup
+  - Object Reset
+
+- Inside new class have:
+  - (2) instances of Object Manager for Main and Backup lists
+  - new struct for a list of Object Lists for multi-level undo
